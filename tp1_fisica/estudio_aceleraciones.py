@@ -2,8 +2,11 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 
+# Constante de la gravedad en cm/ms^2 (para mantener las unidades consistentes)
+g = 9.81 * 100  # g en cm/ms^2
+
 # Cargar el archivo Excel con las mediciones
-archivo_excel = 'estudio_aceleraciones_M110_mesa.xlsx'
+archivo_excel = 'estudio_aceleraciones_m71_papel.xlsx'
 df = pd.read_excel(archivo_excel)
 
 # Define la fórmula de conversión basada en tu calibración previa
@@ -23,6 +26,7 @@ experimentos = []
 datos_experimentales = []
 aceleraciones_vs_m = []
 aceleraciones_vs_M = []
+mu_dinamicos_vs_aceleracion = []
 m_actual = None
 M_actual = None
 
@@ -46,6 +50,10 @@ for _, row in df.iterrows():
             # Ajuste lineal para obtener la aceleración constante
             coeficientes_velocidad = np.polyfit(tiempos, distancias, 2)  # Polinomio de grado 2 para MRUV
             aceleracion_constante = 2 * coeficientes_velocidad[0]  # a(t) = 2 * coef. cuadrático
+            
+            # Cálculo de μ dinámico
+            mu_dinamico = (M_actual - aceleracion_constante * (M_actual + m_actual)) / (m_actual * g)
+            mu_dinamicos_vs_aceleracion.append((mu_dinamico, aceleracion_constante))
             
             aceleraciones_vs_m.append((m_actual, aceleracion_constante))
             aceleraciones_vs_M.append((M_actual, aceleracion_constante))
@@ -77,12 +85,17 @@ if datos_experimentales:
     coeficientes_velocidad = np.polyfit(tiempos, distancias, 2)  # Polinomio de grado 2 para MRUV
     aceleracion_constante = 2 * coeficientes_velocidad[0]  # a(t) = 2 * coef. cuadrático
     
+    # Cálculo de μ dinámico
+    mu_dinamico = (M_actual - aceleracion_constante * (M_actual + m_actual)) / (m_actual * g)
+    mu_dinamicos_vs_aceleracion.append((mu_dinamico, aceleracion_constante))
+    
     aceleraciones_vs_m.append((m_actual, aceleracion_constante))
     aceleraciones_vs_M.append((M_actual, aceleracion_constante))
 
 # Separar las listas para graficar
 m_vals, aceleracion_m_vals = zip(*aceleraciones_vs_m)
 M_vals, aceleracion_M_vals = zip(*aceleraciones_vs_M)
+mu_vals, aceleracion_vals = zip(*mu_dinamicos_vs_aceleracion)
 
 # Gráfico de todos los m vs aceleración
 plt.figure(figsize=(8, 6))
@@ -99,5 +112,14 @@ plt.scatter(aceleracion_M_vals, M_vals, color='r', marker='o')
 plt.xlabel('Aceleración [cm/ms^2]')
 plt.ylabel('M (g)')
 plt.title('Aceleración vs M (todos los experimentos)')
+plt.grid(True)
+plt.show()
+
+# Gráfico de μ dinámico vs aceleración
+plt.figure(figsize=(8, 6))
+plt.scatter(aceleracion_vals, mu_vals, color='g', marker='o')
+plt.xlabel('Aceleración [cm/ms^2]')
+plt.ylabel('μ dinámico')
+plt.title('μ dinámico vs Aceleración (todos los experimentos)')
 plt.grid(True)
 plt.show()
