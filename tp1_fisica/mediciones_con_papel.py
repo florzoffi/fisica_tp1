@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # Cargar el archivo Excel con las mediciones
-archivo_excel = 'estudio_aceleraciones_m71_papel.xlsx'
+archivo_excel = 'mediciones_con_papel.xlsx'
 df = pd.read_excel(archivo_excel)
 
 # Define la fórmula de conversión basada en tu calibración previa
