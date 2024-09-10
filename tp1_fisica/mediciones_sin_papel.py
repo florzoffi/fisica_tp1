@@ -88,23 +88,3 @@ if experimentos:
         plt.legend()
         plt.grid(True)
         plt.show()
-
-        # Gráfico de aceleración vs m
-        plt.figure(figsize=(8, 6))
-        plt.plot([m]*len(aceleracion), aceleracion, 'b-', marker='o', label=f'Aceleración vs m - Experimento {i + 1}')
-        plt.xlabel('m (g)')
-        plt.ylabel('Aceleración [cm/ms^2]')
-        plt.title(f'Aceleración vs m - Experimento {i + 1}')
-        plt.legend()
-        plt.grid(True)
-        plt.show()
-        
-        # Gráfico de aceleración vs M
-        plt.figure(figsize=(8, 6))
-        plt.plot([M]*len(aceleracion), aceleracion, 'r-', marker='o', label=f'Aceleración vs M - Experimento {i + 1}')
-        plt.xlabel('M (g)')
-        plt.ylabel('Aceleración [cm/ms^2]')
-        plt.title(f'Aceleración vs M - Experimento {i + 1}')
-        plt.legend()
-        plt.grid(True)
-        plt.show()

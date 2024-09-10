@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # Cargar el archivo Excel con las mediciones
-archivo_excel = 'mediciones_con_papel.xlsx'
+archivo_excel = 'estudio_aceleraciones_m71_papel.xlsx'
 df = pd.read_excel(archivo_excel)
 
 # Define la fórmula de conversión basada en tu calibración previa
@@ -85,26 +85,6 @@ if experimentos:
         plt.xlabel('Tiempo (ms)')
         plt.ylabel('Distancia calculada (cm)')
         plt.title(f'Gráfico de Distancia vs Tiempo - Experimento {i + 1}')
-        plt.legend()
-        plt.grid(True)
-        plt.show()
-
-        # Gráfico de aceleración vs m
-        plt.figure(figsize=(8, 6))
-        plt.plot([m]*len(aceleracion), aceleracion, 'b-', marker='o', label=f'Aceleración vs m - Experimento {i + 1}')
-        plt.xlabel('m (g)')
-        plt.ylabel('Aceleración [cm/ms^2]')
-        plt.title(f'Aceleración vs m - Experimento {i + 1}')
-        plt.legend()
-        plt.grid(True)
-        plt.show()
-        
-        # Gráfico de aceleración vs M
-        plt.figure(figsize=(8, 6))
-        plt.plot([M]*len(aceleracion), aceleracion, 'r-', marker='o', label=f'Aceleración vs M - Experimento {i + 1}')
-        plt.xlabel('M (g)')
-        plt.ylabel('Aceleración [cm/ms^2]')
-        plt.title(f'Aceleración vs M - Experimento {i + 1}')
         plt.legend()
         plt.grid(True)
         plt.show()
